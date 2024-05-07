@@ -8,6 +8,7 @@ import pygame as pg
 WIDTH = 1600  # ゲームウィンドウの幅
 HEIGHT = 900  # ゲームウィンドウの高さ
 NUM_OF_BOMBS = 5  # 爆弾の数
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -133,6 +134,17 @@ class Beam:
             self.rct.move_ip(self.vx, self.vy)
             screen.blit(self.img, self.rct)
 
+class Score:
+    def __init__(self):
+        self.scct = 0 #スコアカウント
+        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
+        self.img = self.fonto.render("スコア：" + str(self.scct) , 0, (0, 0, 255))
+        self.x = 100
+        self.y = HEIGHT - 50
+    def update(self, screen):
+        self.img = self.fonto.render("スコア：" + str(self.scct) , 0, (0, 0, 255))
+        screen.blit(self.img, [self.x, self.y])
+
 
 
 def main():
@@ -145,6 +157,8 @@ def main():
     beam = None
     clock = pg.time.Clock()
     tmr = 0
+    score = Score()
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -168,7 +182,9 @@ def main():
             if beam is not None and bomb is not None:
             
                 if beam.rct.colliderect(bomb.rct):
-                    bird.change_img(6, screen)
+                    bird.change_img(6, screen)                    
+                    
+                    score.scct += 1
                     pg.display.update()
                     beam = None
                     bomb = None
@@ -182,6 +198,7 @@ def main():
             bomb.update(screen)
         if beam is not None:
             beam.update(screen)
+        score.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
