@@ -134,6 +134,7 @@ class Beam:
             self.rct.move_ip(self.vx, self.vy)
             screen.blit(self.img, self.rct)
 
+
 class Score:
     def __init__(self):
         self.scct = 0 #スコアカウント
