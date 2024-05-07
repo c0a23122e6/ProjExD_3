@@ -146,6 +146,16 @@ class Score:
         screen.blit(self.img, [self.x, self.y])
 
 
+class explosion:
+    def __init__(self, bomb: Bomb):
+        img = pg.image.load("fig/explosion.gif")
+        self.img = [img, pg.transform.flip(img, True, True)]
+        self.rct = img.get_rect()
+        self.rct.center = bomb.rct.center
+        self.life = 60
+
+    def update(self,screem):
+
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
